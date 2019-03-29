@@ -5,6 +5,26 @@ Use TensorFlow object detection API and MobileNet SSDLite model to train a pedes
 
 ```pip install git+https://github.com/cftang0827/pedestrian_detection_ssdlite```
 
+After installation, you can use the API:
+```python
+import cv2
+from pedestrian_detection_ssdlite import api
+from matplotlib import pyplot as plt
+
+img = cv2.imread('test_img/example.jpg')
+bbox_list = api.get_person_bbox(img, thr=0.6)
+print(bbox_list)
+
+for i in bbox_list:
+    cv2.rectangle(img, i[0], i[1], (125, 255, 51), thickness=2)
+
+plt.imshow(img[:, :, ::-1])
+plt.show()
+```
+
+and you will get the list of person bbox:
+```[[(267, 62), (343, 270)], [(201, 65), (255, 227)], [(187, 64), (228, 169)]]```
+
 ## Use the api and pretrained model that I provided
 
 Try `test.py`, and I also provided a simple interface for using model, if you don't want to know the detail, please just copy whole api directory to your project and follow the way in `test.py`, you will know how to use it.
