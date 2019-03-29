@@ -4,7 +4,6 @@ import cv2 as cv
 import os
 
 # Read the graph.
-print(os.path.join(os.path.dirname(__file__), 'frozen_inference_graph.pb'))
 with tf.gfile.FastGFile(
         os.path.join(os.path.dirname(__file__), 'frozen_inference_graph.pb'),
         'rb') as f:
@@ -17,7 +16,7 @@ sess.graph.as_default()
 tf.import_graph_def(graph_def, name='')
 
 
-def api(img, thr):
+def get_person_bbox(img, thr):
 
     bound_box_list = []
     # Read and preprocess an image.
