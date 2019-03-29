@@ -1,9 +1,13 @@
 import numpy as np
 import tensorflow as tf
 import cv2 as cv
+import os
 
 # Read the graph.
-with tf.gfile.FastGFile('api/frozen_inference_graph.pb', 'rb') as f:
+print(os.path.join(os.path.dirname(__file__), 'frozen_inference_graph.pb'))
+with tf.gfile.FastGFile(
+        os.path.join(os.path.dirname(__file__), 'frozen_inference_graph.pb'),
+        'rb') as f:
     graph_def = tf.GraphDef()
     graph_def.ParseFromString(f.read())
 
