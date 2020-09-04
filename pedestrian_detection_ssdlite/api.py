@@ -1,19 +1,20 @@
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import cv2 as cv
 import os
 
+tf.disable_v2_behavior()
 # Read the graph.
 with tf.gfile.FastGFile(
-        os.path.join(os.path.dirname(__file__), 'frozen_inference_graph.pb'),
-        'rb') as f:
+    os.path.join(os.path.dirname(__file__), "frozen_inference_graph.pb"), "rb"
+) as f:
     graph_def = tf.GraphDef()
     graph_def.ParseFromString(f.read())
 
 sess = tf.Session()
 # Restore session
 sess.graph.as_default()
-tf.import_graph_def(graph_def, name='')
+tf.import_graph_def(graph_def, name="")
 
 
 def get_person_bbox(img, thr):
@@ -26,16 +27,15 @@ def get_person_bbox(img, thr):
     inp = inp[:, :, [2, 1, 0]]  # BGR2RGB
 
     # Run the model
-    out = sess.run([
-        sess.graph.get_tensor_by_name('num_detections:0'),
-        sess.graph.get_tensor_by_name('detection_scores:0'),
-        sess.graph.get_tensor_by_name('detection_boxes:0'),
-        sess.graph.get_tensor_by_name('detection_classes:0')
-    ],
-                   feed_dict={
-                       'image_tensor:0':
-                       inp.reshape(1, inp.shape[0], inp.shape[1], 3)
-                   })
+    out = sess.run(
+        [
+            sess.graph.get_tensor_by_name("num_detections:0"),
+            sess.graph.get_tensor_by_name("detection_scores:0"),
+            sess.graph.get_tensor_by_name("detection_boxes:0"),
+            sess.graph.get_tensor_by_name("detection_classes:0"),
+        ],
+        feed_dict={"image_tensor:0": inp.reshape(1, inp.shape[0], inp.shape[1], 3)},
+    )
 
     # Visualize detected bounding boxes.
     num_detections = int(out[0][0])
@@ -48,7 +48,6 @@ def get_person_bbox(img, thr):
             y = bbox[0] * rows
             right = bbox[3] * cols
             bottom = bbox[2] * rows
-            bound_box_list.append([(int(x), int(y)), (int(right),
-                                                      int(bottom))])
+            bound_box_list.append([(int(x), int(y)), (int(right), int(bottom))])
 
     return bound_box_list
