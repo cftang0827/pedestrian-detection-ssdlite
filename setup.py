@@ -27,7 +27,7 @@ setup(
     package_data={'pedestrian_detection_ssdlite': ['*.pb']},
     install_requires=[
         'tensorflow>=2.0.0',
-        'numpy',
+        'numpy <= 1.19.0',
     ],
     include_package_data=True,
     zip_safe=False)
