@@ -9,11 +9,12 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='pedestrian_detection_ssdlite',
-    version='0.0.1',
+    version='1.0.0',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     url='https://github.com/cftang0827/pedestrian_detection_ssdlite',
     author='cftang0827',
@@ -25,7 +26,7 @@ setup(
     },
     package_data={'pedestrian_detection_ssdlite': ['*.pb']},
     install_requires=[
-        'tensorflow==1.15.0',
+        'tensorflow>=2.0.0',
         'numpy',
     ],
     include_package_data=True,
